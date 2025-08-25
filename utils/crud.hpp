@@ -52,6 +52,19 @@ void deleteProduct(vector<Product>& products) {
     // 1. Ask for the ID of the product to delete.
     // 2. Find and remove it from the vector. (Hint: use `products.erase()`).
     // 3. If not found, print an error message.
+    int id;
+    cout << "Enter the ID of product: \n";
+    cin >> id;
+
+     // Find product by ID
+    auto it = find_if(products.begin(), products.end(), [id](const Product& p) {
+        return p.id == id;
+    });
+
+    if (it != products.end()) {
+        products.erase(it);
+        cout << "Product delected succesfully"
+    } else {
     cout << "deleteProduct function is not implemented yet." << endl;
 }
 
@@ -63,6 +76,11 @@ void saveToFile(const vector<Product>& products, const string& filename) {
     // 4. For each product, write the entire object directly to the file.
     //    Hint: `outFile.write(reinterpret_cast<const char*>(&product), sizeof(Product));`
     // 5. Close the file.
+    for (const auto& product : products) {
+        outFile.write(reinterpret_cast<const char*>(&product), sizeof(Product));
+    }
+
+    outFile.close();
     cout << "saveToFile function is not implemented yet." << endl;
 }
 
@@ -77,4 +95,23 @@ void loadFromFile(vector<Product>& products, int& nextId, const string& filename
     // 6. Keep track of the highest ID you find.
     // 7. After the loop, set 'nextId' to be (the highest ID + 1).
     // 8. Close the file.
+    ifstream inFile(filename, ios::binary);
+    if (!inFile) {
+        return;
+    }
+
+}
+
+    Product tempProduct;
+    int highestId = 0;
+
+    while (inFile.read(reinterpret_cast<char*>(&tempProduct), sizeof(Product))) {
+        products.push_back(tempProduct) {
+        if (tempProduct.id > highestId) {
+            highestID = tempProduct.id;
+        }
+    }
+
+    nextId = higestId + 1;
+    inFile.close();
 }
