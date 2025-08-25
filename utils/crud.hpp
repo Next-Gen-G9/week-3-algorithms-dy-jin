@@ -44,6 +44,25 @@ void updateProduct(vector<Product>& products) {
     // 1. Ask for the ID of the product to update.
     // 2. Find the product. If not found, print an error.
     // 3. If found, ask for the new quantity and price and update the product in the vector.
+      int id;
+    cout << "Enter the ID of the product to update: ";   
+    cin >> id;
+
+    auto it = find_it(product.begin(), products.end(), [id](Product& p) {
+        return p.id = id;
+    });
+
+    if (if == products.end()) {
+        cout << "Error: Product not found.\n";
+        return;
+    }
+
+    cout << "Enter new quantity: ";
+    cin >> it->quantity;
+
+    cout << "Enter new price: ";
+    cin >> it->price;
+
     cout << "updateProduct function is not implemented yet." << endl;
 }
 
